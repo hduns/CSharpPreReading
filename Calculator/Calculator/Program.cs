@@ -10,6 +10,6 @@ class Program
         Console.WriteLine("Enter a second number: ");
         string secondNumber = Console.ReadLine();
         Console.WriteLine($"{firstNumber} x {secondNumber} = {int.Parse(firstNumber) * int.Parse(secondNumber)}");
-
+        Console.WriteLine($"{firstNumber} x {secondNumber} = {int.Parse(firstNumber) * int.Parse(secondNumber)}");
     }
 }
