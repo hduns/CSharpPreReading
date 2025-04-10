@@ -12,3 +12,4 @@ C:\Users\hanna\RiderProjects\CSharpPreReading\Calculator\Calculator\obj\Debug\ne
 C:\Users\hanna\RiderProjects\CSharpPreReading\Calculator\Calculator\obj\Debug\net9.0\Calculator.pdb
 C:\Users\hanna\RiderProjects\CSharpPreReading\Calculator\Calculator\obj\Debug\net9.0\Calculator.genruntimeconfig.cache
 C:\Users\hanna\RiderProjects\CSharpPreReading\Calculator\Calculator\obj\Debug\net9.0\ref\Calculator.dll
+C:\Users\hanna\RiderProjects\CSharpPreReading\Calculator\Calculator\obj\Debug\net9.0\Calculator.sourcelink.json
