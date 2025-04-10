@@ -28,27 +28,50 @@ class Program
             else
                 operatorEntered = false;
         }
+        
+        Console.WriteLine($"How many numbers do you want to {operatorSymbol}?");
+        string userInput1 = Console.ReadLine();
+        int numberOfNumbers = int.Parse(userInput1);
 
         if (operatorEntered == true)
         {
-            Console.WriteLine("Enter a number: ");
-            string userInput1 = Console.ReadLine();
-            double firstNumber = double.Parse(userInput1);
+            double[] numbers = new double[numberOfNumbers];
 
-            Console.WriteLine("Enter a second number: ");
-            string userInput2 = Console.ReadLine();
-            double secondNumber = double.Parse(userInput2);
+            for (int i = 0; i < numberOfNumbers; i++)
+            {
+                Console.WriteLine("Enter a number: ");
+                string userInput2 = Console.ReadLine();
+                double number = double.Parse(userInput2);
+                numbers[i] = number;
+            }
+            
+            foreach (double number in numbers)
+            {
+                Console.WriteLine(number);
+            }
+            
+            double result = numbers[0];
 
-            double result = 0;
-
-            if (operatorSymbol == "+")
-                result = firstNumber + secondNumber;
-            else if (operatorSymbol == "-")
-                result = firstNumber - secondNumber;
-            else if (operatorSymbol == "/")
-                result = firstNumber / secondNumber;
-            else if (operatorSymbol == "x")
-                result = firstNumber * secondNumber;
+            for (int i = 1; i < numberOfNumbers; i++)
+            {
+                switch (operatorSymbol)
+                {
+                    case "+":
+                        result += numbers[i];
+                        break;
+                    case "-":
+                        result -= numbers[i];
+                        break;
+                    case "x":
+                        result *= numbers[i];
+                        break;
+                    case "/":
+                        result /= numbers[i];
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             Console.WriteLine($"The answer to your calculation is: {result}");
         } 
