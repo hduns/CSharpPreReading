@@ -61,10 +61,20 @@ class Program
 
         for (int i = 0; i < numberOfNumbers; i++)
         {
-            Console.WriteLine("Enter a number: ");
+            Console.WriteLine("Please enter a number: ");
             string userInput2 = Console.ReadLine();
-            double number = double.Parse(userInput2);
-            numbers[i] = number;
+            double number;
+
+            if (double.TryParse(userInput2, out number))
+            {
+                numbers[i] = number;
+            }
+            else
+            {
+                Console.WriteLine($"{userInput2} is not a number.");
+                i -= 1;
+            }
+
         }
         return numbers;
     }
