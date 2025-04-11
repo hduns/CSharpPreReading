@@ -5,12 +5,11 @@ class Program
     static void Main(string[] args)
     {
         PrintWelcomeMessage();
-        
         string operatorSymbol = ChooseOperatorSymbol();
-
         int numberOfNumbers = ChooseNumberOfNumbers(operatorSymbol);
-
-        double calculationResult = PerformOneCalculation(numberOfNumbers, operatorSymbol);
+        double[] userNumbers = EnterNumbers(numberOfNumbers);
+        double calculationResult = PerformOneCalculation(numberOfNumbers, operatorSymbol, userNumbers);
+        
 
         Console.WriteLine($"The answer to your calculation is: {calculationResult}");
         
@@ -56,7 +55,7 @@ class Program
         return int.Parse(userInput1);
     }
 
-    public static double PerformOneCalculation(int numberOfNumbers, string operatorSymbol)
+    public static double[] EnterNumbers(int numberOfNumbers)
     {
         double[] numbers = new double[numberOfNumbers];
 
@@ -67,29 +66,29 @@ class Program
             double number = double.Parse(userInput2);
             numbers[i] = number;
         }
-            
-        foreach (double number in numbers)
-        {
-            Console.WriteLine(number);
-        }
-            
-        double result = numbers[0];
+        return numbers;
+    }
+
+    public static double PerformOneCalculation(int numberOfNumbers, string operatorSymbol, double[] userNumbers)
+    {
+       
+        double result = userNumbers[0];
 
         for (int i = 1; i < numberOfNumbers; i++)
         {
             switch (operatorSymbol)
             {
                 case "+":
-                    result += numbers[i];
+                    result += userNumbers[i];
                     break;
                 case "-":
-                    result -= numbers[i];
+                    result -= userNumbers[i];
                     break;
                 case "x":
-                    result *= numbers[i];
+                    result *= userNumbers[i];
                     break;
                 case "/":
-                    result /= numbers[i];
+                    result /= userNumbers[i];
                     break;
                 default:
                     break;
