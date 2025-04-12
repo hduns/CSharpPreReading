@@ -5,106 +5,149 @@ class Program
     static void Main(string[] args)
     {
         PrintWelcomeMessage();
-        string operatorSymbol = ChooseOperatorSymbol();
-        int numberOfNumbers = ChooseNumberOfNumbers(operatorSymbol);
-        double[] userNumbers = EnterNumbers(numberOfNumbers);
-        double calculationResult = PerformOneCalculation(numberOfNumbers, operatorSymbol, userNumbers);
-        
-
-        Console.WriteLine($"The answer to your calculation is: {calculationResult}");
+        bool wantCalculation;
+        do
+        {        
+            NumberCalculator.PerformOneCalculation();
+            Console.WriteLine($"The answer to your calculation is: {NumberCalculator.CalculationAnswer}");
+            wantCalculation = RequestCalculcation();
+        } while (wantCalculation);
         
     }
 
     private static void PrintWelcomeMessage()
     {
         Console.WriteLine("Welcome to C# Calculator!");
+        Console.WriteLine("=========================");
     }
-
-    private static string ChooseOperatorSymbol()
+    
+    public class NumberCalculator()
     {
-        bool operatorEntered = false;
-        string[] operatorArray = new string[] { "+", "-", "x", "/" };
-
-        Console.WriteLine("Please enter a operator (choose from +, -, x, /): ");
-        string userInputOperator = Console.ReadLine();
-
-        if (operatorArray.Contains(userInputOperator))
+        private static string OperatorSymbol
         {
-            operatorEntered = true;
+            get;
+            set;
         }
 
-        while (!operatorEntered)
-        {   
-            Console.WriteLine("Please enter a operator (+, -, x, /)");
-            userInputOperator = Console.ReadLine();
+        private static int NumberOfNumbers
+        {
+            get;
+            set;
+        }
+
+        private static double[] UserNumbers
+        {
+            get;
+            set;
+        }
+
+        public static double CalculationAnswer
+        {
+            get;
+            private set;
+        }
+
+        public static void PerformOneCalculation()
+        {
+            ChooseOperatorSymbol();
+            ChooseNumberOfNumbers(OperatorSymbol);
+            EnterNumbers(NumberOfNumbers);
+            CalculateResult(NumberOfNumbers, UserNumbers, OperatorSymbol);
+        }
+
+        static void ChooseOperatorSymbol()
+        {
+            bool operatorEntered = false;
+            string[] operatorArray = new string[] { "+", "-", "x", "/" };
+
+            Console.WriteLine("Please enter a operator (choose from +, -, x, /): ");
+            string userInputOperator = Console.ReadLine();
+
             if (operatorArray.Contains(userInputOperator))
             {
                 operatorEntered = true;
             }
-            else
-                operatorEntered = false;
+
+            while (!operatorEntered)
+            {   
+                Console.WriteLine("Please enter a operator (+, -, x, /)");
+                userInputOperator = Console.ReadLine();
+                if (operatorArray.Contains(userInputOperator))
+                {
+                    operatorEntered = true;
+                }
+                else
+                    operatorEntered = false;
+            }
+
+            OperatorSymbol = userInputOperator;
         }
-
-        return userInputOperator;
-    }
-
-    public static int ChooseNumberOfNumbers(string operatorSymbol)
-    {
-        Console.WriteLine($"How many numbers do you want to {operatorSymbol}?");
-        string userInput1 = Console.ReadLine();
-        return int.Parse(userInput1);
-    }
-
-    public static double[] EnterNumbers(int numberOfNumbers)
-    {
-        double[] numbers = new double[numberOfNumbers];
-
-        for (int i = 0; i < numberOfNumbers; i++)
+        
+        static void ChooseNumberOfNumbers(string OperatorSymbol)
         {
-            Console.WriteLine("Please enter a number: ");
-            string userInput2 = Console.ReadLine();
-            double number;
-
-            if (double.TryParse(userInput2, out number))
-            {
-                numbers[i] = number;
-            }
-            else
-            {
-                Console.WriteLine($"{userInput2} is not a number.");
-                i -= 1;
-            }
-
+            Console.WriteLine($"How many numbers do you want to {OperatorSymbol}?");
+            string userInput1 = Console.ReadLine();
+            NumberOfNumbers = int.Parse(userInput1);
         }
-        return numbers;
+
+        static void EnterNumbers(int NumberOfNumbers)
+        {
+            double[] numbers = new double[NumberOfNumbers];
+
+            for (int i = 0; i < NumberOfNumbers; i++)
+            {
+                Console.WriteLine("Please enter a number: ");
+                string userInput2 = Console.ReadLine();
+                double number;
+
+                if (double.TryParse(userInput2, out number))
+                {
+                    numbers[i] = number;
+                }
+                else
+                {
+                    Console.WriteLine($"{userInput2} is not a number.");
+                    i -= 1;
+                }
+
+            }
+            UserNumbers = numbers;
+            
+        }
+
+        static void CalculateResult(int NumberOfNumbers, double[] UserNumbers, string OperatorSymbol)
+        {
+            double result = UserNumbers[0];
+            
+            for (int i = 1; i < NumberOfNumbers; i++)
+            {
+                switch (OperatorSymbol)
+                {
+                    case "+":
+                        result += UserNumbers[i];
+                        break;
+                    case "-":
+                        result -= UserNumbers[i];
+                        break;
+                    case "x":
+                        result *= UserNumbers[i];
+                        break;
+                    case "/":
+                        result /= UserNumbers[i];
+                        break;
+                    default:
+                        break;
+                }
+            }
+            CalculationAnswer = result;
+        }
     }
 
-    public static double PerformOneCalculation(int numberOfNumbers, string operatorSymbol, double[] userNumbers)
+    public static bool RequestCalculcation()
     {
-       
-        double result = userNumbers[0];
-
-        for (int i = 1; i < numberOfNumbers; i++)
-        {
-            switch (operatorSymbol)
-            {
-                case "+":
-                    result += userNumbers[i];
-                    break;
-                case "-":
-                    result -= userNumbers[i];
-                    break;
-                case "x":
-                    result *= userNumbers[i];
-                    break;
-                case "/":
-                    result /= userNumbers[i];
-                    break;
-                default:
-                    break;
-            }
-        }
-        return result;
+        Console.WriteLine("Would you like to calculate something else? (Yes or No)");
+        string userAnswer = Console.ReadLine().ToLower();
+        return userAnswer == "yes" ? true : false;
     }
     
 }
