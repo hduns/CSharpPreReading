@@ -55,4 +55,47 @@ public class DateCalculator
         NewDate= NewDate.AddYears(-UserYears);
     }
 
+    public void LogCalculationInTextFile(string path, string dateCalculationOption)
+    {
+        string calculationBody = "";
+        string operation = "";
+
+        switch (dateCalculationOption)
+        {
+            case "Add":
+                operation = "+";
+                break;
+            case "Subtract":
+                operation = "-";
+                break;
+            default:
+                break;
+        }
+
+        if (UserDays > 0)
+        {
+            calculationBody += operation + " " + UserDays.ToString() + " day(s)";
+        }
+        
+        if (UserMonths > 0)
+        {
+            calculationBody += " " + operation + " "  + UserMonths.ToString() + " month(s)";
+        }
+        
+        if (UserYears > 0)
+        {
+            calculationBody += " " + operation + " "  + UserYears.ToString() + " year(s)";
+        }
+
+        calculationBody = calculationBody.Trim();
+         
+
+        using (StreamWriter sw = File.AppendText(path))
+        {
+            sw.WriteLine($"{OriginalDate.ToShortDateString()} {calculationBody} = {NewDate.ToShortDateString()}");
+            sw.WriteLine();
+        }
+    }
+
+
 }

@@ -120,5 +120,23 @@ public class NumberCalculator()
             }
             CalculationAnswer = result;
         }
+
+        public static void LogCalculationInTextFile(string path)
+        {
+            string calculationBody = "";
+            foreach (double number in UserNumbers)
+            {
+                    calculationBody += " " + number + " " + OperatorSymbol;
+            }
+
+            calculationBody = calculationBody.Trim().Substring(0, calculationBody.Length - 2);
+
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                sw.WriteLine($"{calculationBody} = {CalculationAnswer}");
+                sw.WriteLine();
+            }
+
+        }
     }
 
