@@ -64,9 +64,13 @@ public class NumberCalculator()
         
         static void ChooseNumberOfNumbers(string OperatorSymbol)
         {
-            Console.WriteLine($"How many numbers do you want to {OperatorSymbol}?");
-            string userInput1 = Console.ReadLine();
-            NumberOfNumbers = int.Parse(userInput1);
+            int number;
+            
+            do
+            {
+                Console.WriteLine($"How many numbers do you want to {OperatorSymbol}?");
+            } while (!int.TryParse(Console.ReadLine(), out number));
+            NumberOfNumbers = number;
         }
 
         static void EnterNumbers(int NumberOfNumbers)
@@ -98,26 +102,23 @@ public class NumberCalculator()
         {
             double result = UserNumbers[0];
             
-            for (int i = 1; i < NumberOfNumbers; i++)
-            {
                 switch (OperatorSymbol)
                 {
                     case "+":
-                        result += UserNumbers[i];
+                        result = UserNumbers.Sum();
                         break;
                     case "-":
-                        result -= UserNumbers[i];
+                        result = UserNumbers.Aggregate((accumulator, currentValue) => accumulator - currentValue);
                         break;
                     case "x":
-                        result *= UserNumbers[i];
+                        result = UserNumbers.Aggregate((accumulator, currentValue) => accumulator * currentValue);
                         break;
                     case "/":
-                        result /= UserNumbers[i];
+                        result = UserNumbers.Aggregate((accumulator, currentValue) => accumulator / currentValue);
                         break;
                     default:
                         break;
                 }
-            }
             CalculationAnswer = result;
         }
 
